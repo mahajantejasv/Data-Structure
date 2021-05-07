@@ -36,14 +36,25 @@ class SinglyLinkedList {
   }
 
   deleteNode(value) {
-    if (this.head) {
-      let currentNode = this.head;
-      if (currentNode.value === value) this.head = this.head.next;
+    // if (this.head) {
+    //   let currentNode = this.head;
+    //   if (currentNode.value === value) this.head = this.head.next;
+    //   else {
+    //     if(currentNode.next) {
+    //       while (currentNode.next.value != value) {
+    //         currentNode = currentNode.next;
+    //       }
+    //       currentNode.next = currentNode.next.next;
+    //     }
+    //   }
+    // }
+    if (this.search(this.head, value)) {
+      let currnetNode = this.head;
+      if (this.head.value === value) this.head = this.head.next;
       else {
-        while (currentNode.next.value != value) {
-          currentNode = currentNode.next;
-        }
-        currentNode.next = currentNode.next.next;
+        while (currnetNode.next && currnetNode.next.value != value) 
+            currnetNode = currnetNode.next;
+        currnetNode.next = currnetNode.next ? currnetNode.next.next : null;
       }
     }
   }
@@ -52,11 +63,11 @@ class SinglyLinkedList {
     return node ? 1 + this.calculateLength(node.next) : 0;
   }
 
-  search(node: SinglyLinkedListNode, value): SinglyLinkedListNode {
+  search(node: SinglyLinkedListNode, value): boolean {
     if (node) {
-      return node.value != value ? this.search(node.next, value) : node;
+      return node.value != value ? this.search(node.next, value) : true;
     } else {
-      return null;
+      return false;
     }
   }
 }
@@ -77,7 +88,12 @@ singlyLinkedListInstance.deleteNode(3);
 console.log("Singly Linked List :::: Node has Been Deleted :::: ");
 singlyLinkedListInstance.printSinglyLinkedList();
 console.log("Singly Linked List :::: Length Calculation :::: ");
-console.log(singlyLinkedListInstance.calculateLength(singlyLinkedListInstance.head));
+console.log(
+  singlyLinkedListInstance.calculateLength(singlyLinkedListInstance.head)
+);
 console.log("Singly Linked List :::: Search :::: ");
-console.log(singlyLinkedListInstance.search(singlyLinkedListInstance.head, 4) ?
-  "Found" : "Not Found");
+console.log(
+  singlyLinkedListInstance.search(singlyLinkedListInstance.head, 4)
+    ? "Found"
+    : "Not Found"
+);
